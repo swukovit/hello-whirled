@@ -7,7 +7,6 @@ package threads.creation;
  */
 public class Nesting extends Thread {
 
-
     public Nesting(String name) {
         super(name);
     }
@@ -15,11 +14,11 @@ public class Nesting extends Thread {
     static protected Integer threadCount = 0;
 
     public void run() {
+
         System.out.println(this.getClass().getName() + " #" + this.getName() + " is running now.");
 
         Thread t = new Nesting((++threadCount).toString());
         t.start();
-
     }
 
     public static void main(String[] args) throws InterruptedException {

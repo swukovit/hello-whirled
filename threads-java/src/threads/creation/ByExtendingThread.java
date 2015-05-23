@@ -11,6 +11,7 @@ public class ByExtendingThread extends Thread {
     }
 
     public static void main(String[] args) {
+
         Thread thread = new ByExtendingThread();
         thread.start();
     }
