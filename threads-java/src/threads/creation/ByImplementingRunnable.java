@@ -1,9 +1,9 @@
 package threads.creation;
 
 /**
- * Creates a single thread, extending Thread.
+ * Creates a single thread, implementing Runnable instead of extending Thread.
  */
-public class Single extends Thread {
+public class ByImplementingRunnable implements Runnable {
 
     @Override
     public void run() {
@@ -11,7 +11,8 @@ public class Single extends Thread {
     }
 
     public static void main(String[] args) {
-        Single thread = new Single();
+
+        Thread thread = new Thread(new ByImplementingRunnable());
         thread.start();
     }
 }
