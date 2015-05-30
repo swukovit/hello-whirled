@@ -2,6 +2,7 @@ package threads.creation;
 
 /**
  * Creates a single thread, extending Thread.
+ * Normally Runnable should be used instead, unless a Thread subclass is really needed.
  */
 public class ByExtendingThread extends Thread {
 

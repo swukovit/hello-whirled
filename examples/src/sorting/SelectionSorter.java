@@ -1,35 +1,20 @@
 package sorting;
 
-import java.lang.List;
-import java.lang.ArrayList;
+import java.util.ArrayList;
 
-public class SelectionSorter
-{
-    public void SelectionSort(out List<int> a)
-    {
-        if (a == null)
-            return null;
-        if (a.length() < 2)
-            return a;
+public class SelectionSorter {
+    public void SelectionSort(ArrayList<Integer> a) {
+        if (a == null || a.size() <= 1)
+            return;
 
-        List<int> newList = new ArrayList<>();
-        while (a.length() > 0)
-        {
-            Iterator<List<int>> it = a.first();
-            int currentMin = it.value;
-            Iterator<List<int>> itMin = it;
-            while (it.hasNext())
-            {
-                if (it.peekNext().value < currentValue)
-                {
-                    currentMin = it.peekNext.value;
-                    itMin = it.getNext();
+        for (int i = 0; i < a.size() - 1; ++i) {
+            for (int j = i + 1; j < a.size(); ++j) {
+                if (a.get(j) < a.get(i)) {
+                    Integer temp = a.get(i);
+                    a.set(i, a.get(j));
+                    a.set(j, temp);
                 }
-                it = it.Next();
             }
-            newList.append(currentMin);
-            itMin.remove();
         }
-        a = newList;
     }
 }
