@@ -14,58 +14,36 @@ public class TopNWords {
      * Finds the top n words in a text file. File is required to be a standard text file without
      * needing character translation.
      *
-     * @param f The file to read from
+     * @param fileScanner The prepared scanner to read from
      * @param n The number of words to find
      * @return Array of the top n words in the file
      */
-    public String[] findTopNWords(File f, int n) throws FileNotFoundException
+    public String[] findTopNWords(Scanner fileScanner, int n) throws FileNotFoundException
     {
-        validateInput(f, n);
-        Map<String,Integer> wordCounts = countWords(f);
-        return findTopNWords(wordCounts, n);
-    }
-
-    private void validateInput(File f, int n)
-    {
-        if (f == null || n <= 0 || !f.exists() || f.length() == 0) {
+        if (fileScanner == null || n <= 0) {
             throw new IllegalArgumentException();
         }
+        Map<String,Integer> wordCounts = countWords(fileScanner);
+        return findTopNWords(wordCounts, n);
     }
 
     /**
      * Counts the words in the file. A word is defined as anything that doesn't include whitespace.
-     * @param f The file
+     * @param fileScanner The file
      * @return A created map of word to count
-     * @throws FileNotFoundException
      */
-    Map<String, Integer> countWords(File f) throws FileNotFoundException
+    Map<String, Integer> countWords(Scanner fileScanner)
     {
-        Scanner fileScanner = new Scanner(f);
+        HashMap<String, Integer> wordCounts = new HashMap<>();
 
-        HashMap<String, Integer> wordCounts = createHashMap(f.length());
-
-        while (fileScanner.hasNextLine())
+        while (fileScanner.hasNext())
         {
-            String[] lineWords = fileScanner.nextLine().split("\\s");
-            for (String word : lineWords)
-            {
-                int currentCount = wordCounts.get(word);
-                wordCounts.put(word, ++currentCount);
-            }
+            String word = fileScanner.next();
+            int currentCount = wordCounts.getOrDefault(word, 0);
+            wordCounts.put(word, ++currentCount);
         }
 
         return wordCounts;
-    }
-
-    /**
-     * Creates a hashmap initialized to an estimated correct capacity to hold all the words given a file length.
-     * @param fileLength the length of the text file
-     * @return A new HashMap
-     */
-    HashMap<String, Integer> createHashMap(long fileLength)
-    {
-        final int estimatedWordCount = (int) fileLength / 10 + 1;
-        return new HashMap<>(estimatedWordCount);
     }
 
     class PriorityWordCount implements Comparable<PriorityWordCount>
@@ -82,7 +60,7 @@ public class TopNWords {
         @Override
         public int compareTo(@SuppressWarnings("NullableProblems") PriorityWordCount o)
         {
-            return Integer.compare(count, o.count);
+            return Integer.compare(o.count, count);
         }
     }
 
